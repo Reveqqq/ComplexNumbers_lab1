@@ -11,5 +11,20 @@ public:
 	double GetImaginaryPart();
 	double SetImaginaryPart(double number);
 
+	ComplexNumbers operator+(const ComplexNumbers &other)
+	{
+		return ComplexNumbers(
+			this->real_part + other.real_part,
+			this->imaginary_part + other.imaginary_part
+		);
+	};
+
+	ComplexNumbers operator-(const ComplexNumbers& other)
+	{
+		return ComplexNumbers(
+			this->real_part - other.real_part,
+			this->imaginary_part -	 other.imaginary_part
+		);
+	};
 };
 
