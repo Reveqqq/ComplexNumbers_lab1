@@ -40,7 +40,7 @@ ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
 	);
 };
 
-ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
+ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
 {
 	return ComplexNumbers(
 		this->_real_part - other._real_part,
