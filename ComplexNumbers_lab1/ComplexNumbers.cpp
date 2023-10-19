@@ -3,44 +3,44 @@
 
 namespace complex {
 
-ComplexNumbers::ComplexNumbers()
-{
+	ComplexNumbers::ComplexNumbers()
+	{
 		_real = 0;
 		_imz = 0;
 		_angel = acos(-1);
-}
+	}
 
-ComplexNumbers::ComplexNumbers(double re, double imz)
-{
+	ComplexNumbers::ComplexNumbers(double re, double imz)
+	{
 		_real = re;
 		_imz = imz;
 		_angel = this->GetAngel();
-}
+	}
 
 	double ComplexNumbers::GetAngel() const
 	{
 		return _real ? atan(_imz / _real) : acos(-1);
 	}
 
-double ComplexNumbers::GetRealPart()
-{
+	double ComplexNumbers::GetRealPart()
+	{
 		return this->_real;
-}
+	}
 
 	double ComplexNumbers::SetRealPart(double& num_part)
-{
+	{
 		return this->_real = num_part;
-}
+	}
 
-double ComplexNumbers::GetImaginaryPart()
-{
+	double ComplexNumbers::GetImaginaryPart()
+	{
 		return this->_imz;
-}
+	}
 
 	double ComplexNumbers::SetImaginaryPart(double& num_part)
-{
+	{
 		return this->_imz = num_part;
-}
+	}
 
 	ComplexNumbers ComplexNumbers::Add(ComplexNumbers& left, ComplexNumbers& right)
 	{
@@ -80,17 +80,17 @@ double ComplexNumbers::GetImaginaryPart()
 		);
 	}
 
-ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
-{
-	return ComplexNumbers(
+	ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
+	{
+		return ComplexNumbers(
 			this->_real + other._real,
 			this->_imz + other._imz
-	);
-};
+		);
+	};
 
-ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
-{
-	return ComplexNumbers(
+	ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
+	{
+		return ComplexNumbers(
 			this->_real - other._real,
 			this->_imz - other._imz
 		);
@@ -115,8 +115,19 @@ ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
 		return ComplexNumbers(
 			(p1 / p2) * cos(ang1 - ang2),
 			(p1 / p2) * sin(ang1 - ang2)
-	);
+		);
 	}
 
+	std::ostream& operator<<(std::ostream& out, const ComplexNumbers& complex)
+	{
+		out << complex._real << " + " << complex._imz << 'i';
+		return out;
+	}
 
+	std::istream& operator>>(std::istream& in, ComplexNumbers& complex)
+	{
+		in >> complex._real >> complex._imz;
+		complex._angel = complex.GetAngel();
+		return in;
+	}
 }
