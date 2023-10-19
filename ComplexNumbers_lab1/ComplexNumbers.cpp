@@ -1,49 +1,133 @@
 #include "ComplexNumbers.h"
+#include <math.h>
 
-ComplexNumbers::ComplexNumbers()
-{
-	_real_part = 0;
-	_imaginary_part = 0;
+namespace complex {
+
+	ComplexNumbers::ComplexNumbers()
+	{
+		_real = 0;
+		_imz = 0;
+		_angel = acos(-1);
+	}
+
+	ComplexNumbers::ComplexNumbers(double re, double imz)
+	{
+		_real = re;
+		_imz = imz;
+		_angel = this->GetAngel();
+	}
+
+	double ComplexNumbers::GetAngel() const
+	{
+		return _real ? atan(_imz / _real) : acos(-1);
+	}
+
+	double ComplexNumbers::GetRealPart()
+	{
+		return this->_real;
+	}
+
+	double ComplexNumbers::SetRealPart(double& num_part)
+	{
+		return this->_real = num_part;
+	}
+
+	double ComplexNumbers::GetImaginaryPart()
+	{
+		return this->_imz;
+	}
+
+	double ComplexNumbers::SetImaginaryPart(double& num_part)
+	{
+		return this->_imz = num_part;
+	}
+
+	ComplexNumbers ComplexNumbers::Add(ComplexNumbers& left, ComplexNumbers& right)
+	{
+		return left + right;
+	}
+
+	ComplexNumbers ComplexNumbers::Sub(ComplexNumbers& left, ComplexNumbers& right)
+	{
+		return left - right;
+	}
+
+	ComplexNumbers ComplexNumbers::Mult(ComplexNumbers& left, ComplexNumbers& right)
+	{
+		return left * right;
+	}
+
+	ComplexNumbers ComplexNumbers::Div(ComplexNumbers& left, ComplexNumbers& right)
+	{
+		return left / right;
+	}
+
+	ComplexNumbers ComplexNumbers::Pow(const ComplexNumbers& num, double& n)
+	{
+
+		double p = pow(num.Abs(), n);
+		auto ang = n * num.GetAngel();
+		return ComplexNumbers(
+			p * cos(ang),
+			p * sin(ang)
+		);
+	}
+
+	double ComplexNumbers::Abs() const
+	{
+		return sqrt(
+			pow(_real, 2) + pow(_imz, 2)
+		);
+	}
+
+	ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
+	{
+		return ComplexNumbers(
+			this->_real + other._real,
+			this->_imz + other._imz
+		);
+	};
+
+	ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
+	{
+		return ComplexNumbers(
+			this->_real - other._real,
+			this->_imz - other._imz
+		);
+	}
+	ComplexNumbers ComplexNumbers::operator*(const ComplexNumbers& other)
+	{
+		auto p1 = this->Abs();
+		auto p2 = other.Abs();
+		auto ang1 = this->GetAngel();
+		auto ang2 = other.GetAngel();
+		return ComplexNumbers(
+			p1 * p2 * cos(ang1 + ang2),
+			p1 * p2 * sin(ang1 + ang2)
+		);
+	}
+	ComplexNumbers ComplexNumbers::operator/(const ComplexNumbers& other)
+	{
+		auto p1 = this->Abs();
+		auto p2 = other.Abs();
+		auto ang1 = this->GetAngel();
+		auto ang2 = other.GetAngel();
+		return ComplexNumbers(
+			(p1 / p2) * cos(ang1 - ang2),
+			(p1 / p2) * sin(ang1 - ang2)
+		);
+	}
+
+	std::ostream& operator<<(std::ostream& out, const ComplexNumbers& complex)
+	{
+		out << complex._real << " + " << complex._imz << 'i';
+		return out;
+	}
+
+	std::istream& operator>>(std::istream& in, ComplexNumbers& complex)
+	{
+		in >> complex._real >> complex._imz;
+		complex._angel = complex.GetAngel();
+		return in;
+	}
 }
-
-ComplexNumbers::ComplexNumbers(double re, double imz)
-{
-	_real_part = re;
-	_imaginary_part = imz;
-}
-
-double ComplexNumbers::GetRealPart()
-{
-	return this->_real_part;
-}
-
-double ComplexNumbers::SetRealPart(double num_part)
-{
-	return this->_real_part = num_part;
-}
-
-double ComplexNumbers::GetImaginaryPart()
-{
-	return this->_imaginary_part;
-}
-
-double ComplexNumbers::SetImaginaryPart(double num_part)
-{
-	return this->_imaginary_part = num_part;
-}
-
-ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
-{
-	return ComplexNumbers(
-		this->_real_part + other._real_part,
-		this->_imaginary_part + other._imaginary_part
-	);
-};
-
-ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
-{
-	return ComplexNumbers(
-		this->_real_part - other._real_part,
-		this->_imaginary_part - other._imaginary_part
-	);
-};
