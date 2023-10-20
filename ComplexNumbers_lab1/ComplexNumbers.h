@@ -30,6 +30,10 @@ namespace complex {
 		ComplexNumbers operator*(const ComplexNumbers& other);
 		ComplexNumbers operator/(const ComplexNumbers& other);
 
+		bool operator==(const ComplexNumbers& other) const noexcept;
+		bool operator==(int& other) noexcept;
+		bool operator==(double& other) noexcept;
+
 		friend std::ostream& operator<<(std::ostream& out, const ComplexNumbers& complex);
 		friend std::istream& operator>>(std::istream& in, ComplexNumbers& complex);
 	};

@@ -118,6 +118,29 @@ namespace complex {
 		);
 	}
 
+	bool ComplexNumbers::operator==(const ComplexNumbers& other) const noexcept
+	{
+		constexpr double epsilon{ 2.22e-12L };
+		ComplexNumbers a{ *this };
+		return (a - other).Abs() <= epsilon;
+	}
+
+	bool ComplexNumbers::operator==(int& other) noexcept
+	{
+		constexpr double epsilon{ 2.22e-12L };
+		ComplexNumbers a{ *this };
+		ComplexNumbers b{ (double)other, 0 };
+		return (a - b).Abs() <= epsilon;
+	}
+
+	bool ComplexNumbers::operator==(double& other) noexcept
+	{
+		constexpr double epsilon{ 2.22e-12L };
+		ComplexNumbers a{ *this };
+		ComplexNumbers b{ other, 0 };
+		return (a - b).Abs() <= epsilon;
+	}
+
 	std::ostream& operator<<(std::ostream& out, const ComplexNumbers& complex)
 	{
 		out << complex._real << " + " << complex._imz << 'i';
