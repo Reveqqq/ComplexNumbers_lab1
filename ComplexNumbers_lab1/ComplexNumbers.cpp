@@ -3,12 +3,7 @@
 
 namespace complex {
 
-	ComplexNumbers::ComplexNumbers()
-	{
-		_real = 0;
-		_imz = 0;
-		_angel = acos(-1);
-	}
+	ComplexNumbers::ComplexNumbers() : ComplexNumbers(0.0, 0.0) {}
 
 	ComplexNumbers::ComplexNumbers(double re, double imz)
 	{
