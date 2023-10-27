@@ -63,7 +63,6 @@ namespace ComplexUnitTest
 		{
 			ComplexNumbers a = ComplexNumbers(4.0, 5.0);
 			ComplexNumbers b = ComplexNumbers(10.0, 3.0);
-			double eps = 1E-10;
 			a = ComplexNumbers::Mult(a, b);
 			Assert::IsTrue(a.GetRealPart() - 25 <= eps);
 			Assert::IsTrue(a.GetImaginaryPart() - 62 <= eps);
@@ -73,7 +72,6 @@ namespace ComplexUnitTest
 		{
 			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
 			ComplexNumbers b = ComplexNumbers(7.0, -6.0);
-			double eps = 1E-10;
 			a = ComplexNumbers::Div(a, b);
 			Assert::IsTrue(a.GetRealPart() - 1 <= eps);
 			Assert::IsTrue(a.GetImaginaryPart() - 1 <= eps);
@@ -83,7 +81,6 @@ namespace ComplexUnitTest
 		{
 			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
 			double power = 2;
-			double eps = 1E-10;
 			a = ComplexNumbers::Pow(a, power);
 			Assert::IsTrue(a.GetRealPart() - 168 <= eps);
 			Assert::IsTrue(a.GetImaginaryPart() - 26 <= eps);
@@ -92,7 +89,6 @@ namespace ComplexUnitTest
 		TEST_METHOD(AbsTest)
 		{
 			ComplexNumbers a = ComplexNumbers(-4.0, 3.0);
-			double eps = 1E-10;
 			auto res = a.Abs();
 			Assert::IsTrue(res == 5);
 		}
