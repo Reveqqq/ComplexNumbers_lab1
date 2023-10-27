@@ -93,4 +93,38 @@ namespace ComplexUnitTest
 			Assert::IsTrue(res == 5);
 		}
 	};
+
+	TEST_CLASS(BoolOperationTests)
+	{
+	public:
+		TEST_METHOD(EqualsWithComplex)
+		{
+			ComplexNumbers a = ComplexNumbers(5, 10);
+			ComplexNumbers b = ComplexNumbers(5, 10);
+			ComplexNumbers c = ComplexNumbers(-5, -10);
+			Assert::IsTrue(a == b);
+			Assert::IsFalse(a == c);
+		}
+
+		TEST_METHOD(EqualsWithInt)
+		{
+			ComplexNumbers a = ComplexNumbers(4, 0);
+			int b = 4;
+			Assert::IsTrue(a == b);
+			double d = 2.0;
+			a.SetImaginaryPart(d);
+			Assert::IsFalse(a == b);
+		}
+
+		TEST_METHOD(EqualsWithDouble)
+		{
+			ComplexNumbers a = ComplexNumbers(10, 0);
+			double b = 10;
+			Assert::IsTrue(a == b);
+			a.SetImaginaryPart(b);
+			Assert::IsFalse(a == b);
+
+		}
+
+	};
 }
