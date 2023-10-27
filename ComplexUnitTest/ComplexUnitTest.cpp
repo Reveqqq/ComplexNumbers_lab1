@@ -76,5 +76,23 @@ namespace ComplexUnitTest
 			Assert::IsTrue(a.GetRealPart() - 1 <= eps);
 			Assert::IsTrue(a.GetImaginaryPart() - 1 <= eps);
 		}
+
+		TEST_METHOD(PowTest)
+		{
+			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
+			double power = 2;
+			double eps = 1E-10;
+			a = ComplexNumbers::Pow(a, power);
+			Assert::IsTrue(a.GetRealPart() - 168 <= eps);
+			Assert::IsTrue(a.GetImaginaryPart() - 26 <= eps);
+		}
+
+		TEST_METHOD(AbsTest)
+		{
+			ComplexNumbers a = ComplexNumbers(-4.0, 3.0);
+			double eps = 1E-10;
+			auto res = a.Abs();
+			Assert::IsTrue(res == 5);
+		}
 	};
 }
