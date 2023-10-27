@@ -7,6 +7,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ComplexUnitTest
 {
+	double eps = 2.22e-12L;
+
 	TEST_CLASS(ConstructorTests)
 	{
 	public:
