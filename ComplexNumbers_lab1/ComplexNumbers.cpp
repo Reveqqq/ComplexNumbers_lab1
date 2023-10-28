@@ -9,10 +9,9 @@ namespace complex {
 	{
 		_real = re;
 		_imz = imz;
-		_angel = this->GetAngel();
 	}
 
-	double ComplexNumbers::GetAngel() const
+	double ComplexNumbers::GetAngle() const
 	{
 		return _real ? atan(_imz / _real) : acos(-1);
 	}
@@ -61,7 +60,7 @@ namespace complex {
 	{
 
 		double p = pow(num.Abs(), n);
-		auto ang = n * num.GetAngel();
+		auto ang = n * num.GetAngle();
 		return ComplexNumbers(
 			p * cos(ang),
 			p * sin(ang)
@@ -94,8 +93,8 @@ namespace complex {
 	{
 		auto p1 = this->Abs();
 		auto p2 = other.Abs();
-		auto ang1 = this->GetAngel();
-		auto ang2 = other.GetAngel();
+		auto ang1 = this->GetAngle();
+		auto ang2 = other.GetAngle();
 		return ComplexNumbers(
 			p1 * p2 * cos(ang1 + ang2),
 			p1 * p2 * sin(ang1 + ang2)
@@ -105,8 +104,8 @@ namespace complex {
 	{
 		auto p1 = this->Abs();
 		auto p2 = other.Abs();
-		auto ang1 = this->GetAngel();
-		auto ang2 = other.GetAngel();
+		auto ang1 = this->GetAngle();
+		auto ang2 = other.GetAngle();
 		return ComplexNumbers(
 			(p1 / p2) * cos(ang1 - ang2),
 			(p1 / p2) * sin(ang1 - ang2)
@@ -145,7 +144,6 @@ namespace complex {
 	std::istream& operator>>(std::istream& in, ComplexNumbers& complex)
 	{
 		in >> complex._real >> complex._imz;
-		complex._angel = complex.GetAngel();
 		return in;
 	}
 }

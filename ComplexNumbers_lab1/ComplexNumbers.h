@@ -7,8 +7,7 @@ namespace complex {
 	private:
 		double _real;
 		double _imz;
-		double _angel;
-		double GetAngel() const;
+		double GetAngle() const;
 	public:
 		ComplexNumbers(double re, double imz);
 		ComplexNumbers();
