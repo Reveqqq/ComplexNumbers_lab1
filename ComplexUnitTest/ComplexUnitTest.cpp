@@ -7,8 +7,6 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ComplexUnitTest
 {
-	double eps = 2.22e-12L;
-
 	TEST_CLASS(ConstructorTests)
 	{
 	public:
@@ -35,55 +33,60 @@ namespace ComplexUnitTest
 			ComplexNumbers c;
 			double re = 1.5;
 			double imz = 5.5;
+			ComplexNumbers ans = ComplexNumbers(1.5, 5.5);
 			c.SetRealPart(re);
 			c.SetImaginaryPart(imz);
-			Assert::IsTrue(c.GetRealPart() == 1.5);
-			Assert::IsTrue(c.GetImaginaryPart() == 5.5);
+			Assert::IsTrue(c == ans);
 		}
 
 		TEST_METHOD(AdditionTest)
 		{
 			ComplexNumbers a = ComplexNumbers(4.0, 12.5);
 			ComplexNumbers b = ComplexNumbers(2.0, 2.5);
-			a = ComplexNumbers::Add(a, b);
-			Assert::IsTrue(a.GetRealPart() == 6);
-			Assert::IsTrue(a.GetImaginaryPart() == 15);
+			ComplexNumbers ans = ComplexNumbers(6.0, 15.0);
+			auto res = ComplexNumbers::Add(a, b);
+			Assert::IsTrue(res == ans);
 		}
 
 		TEST_METHOD(SubtractionTest)
 		{
 			ComplexNumbers a = ComplexNumbers(4.0, 12.5);
 			ComplexNumbers b = ComplexNumbers(2.0, 2.5);
-			a = ComplexNumbers::Sub(b, a);
-			Assert::IsTrue(a.GetRealPart() == -2);
-			Assert::IsTrue(a.GetImaginaryPart() == -10);
+			ComplexNumbers ans = ComplexNumbers(-2, -10);
+			auto res = ComplexNumbers::Sub(b, a);
+			Assert::IsTrue(res == ans);
 		}
 
 		TEST_METHOD(MultiplicationTest)
 		{
 			ComplexNumbers a = ComplexNumbers(4.0, 5.0);
 			ComplexNumbers b = ComplexNumbers(10.0, 3.0);
-			a = ComplexNumbers::Mult(a, b);
-			Assert::IsTrue(a.GetRealPart() - 25 <= eps);
-			Assert::IsTrue(a.GetImaginaryPart() - 62 <= eps);
+			ComplexNumbers ans = ComplexNumbers(25.0, 62.0);
+			auto res = ComplexNumbers::Mult(a, b);
+			Assert::IsTrue(res == ans);
 		}
 
 		TEST_METHOD(DivisionTest)
 		{
 			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
 			ComplexNumbers b = ComplexNumbers(7.0, -6.0);
-			a = ComplexNumbers::Div(a, b);
-			Assert::IsTrue(a.GetRealPart() - 1 <= eps);
-			Assert::IsTrue(a.GetImaginaryPart() - 1 <= eps);
+			ComplexNumbers ans = ComplexNumbers(1.0, 1.0);
+			auto res = ComplexNumbers::Div(a, b);
+			Assert::IsTrue(res == ans);
+			Assert::ExpectException<std::exception>([]() {
+				auto a = ComplexNumbers(4.0, 12.5);
+				ComplexNumbers c;
+				ComplexNumbers::Div(a, c);
+				});
 		}
 
 		TEST_METHOD(PowTest)
 		{
 			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
+			ComplexNumbers ans = ComplexNumbers(168.0, 26.0);
 			double power = 2;
-			a = ComplexNumbers::Pow(a, power);
-			Assert::IsTrue(a.GetRealPart() - 168 <= eps);
-			Assert::IsTrue(a.GetImaginaryPart() - 26 <= eps);
+			auto res = ComplexNumbers::Pow(a, power);
+			Assert::IsTrue(res == ans);
 		}
 
 		TEST_METHOD(AbsTest)

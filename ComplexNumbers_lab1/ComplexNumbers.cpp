@@ -5,12 +5,8 @@ namespace complex {
 
 	ComplexNumbers::ComplexNumbers() : ComplexNumbers(0.0, 0.0) {}
 
-	ComplexNumbers::ComplexNumbers(double re, double imz)
-	{
-		_real = re;
-		_imz = imz;
-	}
-
+	ComplexNumbers::ComplexNumbers(double re, double imz): _real(re), _imz(imz){}
+	
 	double ComplexNumbers::GetAngle() const
 	{
 		return _real ? atan(_imz / _real) : acos(-1);
@@ -21,7 +17,7 @@ namespace complex {
 		return this->_real;
 	}
 
-	double ComplexNumbers::SetRealPart(double& num_part)
+	double ComplexNumbers::SetRealPart(const double num_part)
 	{
 		return this->_real = num_part;
 	}
@@ -74,7 +70,7 @@ namespace complex {
 		);
 	}
 
-	ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other)
+	ComplexNumbers ComplexNumbers::operator+(const ComplexNumbers& other) const
 	{
 		return ComplexNumbers(
 			this->_real + other._real,
@@ -82,14 +78,14 @@ namespace complex {
 		);
 	};
 
-	ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other)
+	ComplexNumbers ComplexNumbers::operator-(const ComplexNumbers& other) const
 	{
 		return ComplexNumbers(
 			this->_real - other._real,
 			this->_imz - other._imz
 		);
 	}
-	ComplexNumbers ComplexNumbers::operator*(const ComplexNumbers& other)
+	ComplexNumbers ComplexNumbers::operator*(const ComplexNumbers& other) const
 	{
 		auto p1 = this->Abs();
 		auto p2 = other.Abs();
@@ -100,10 +96,12 @@ namespace complex {
 			p1 * p2 * sin(ang1 + ang2)
 		);
 	}
-	ComplexNumbers ComplexNumbers::operator/(const ComplexNumbers& other)
+	ComplexNumbers ComplexNumbers::operator/(const ComplexNumbers& other) const
 	{
 		auto p1 = this->Abs();
 		auto p2 = other.Abs();
+		if (p2 <= epsilon)
+			throw std::exception("Division by zero");
 		auto ang1 = this->GetAngle();
 		auto ang2 = other.GetAngle();
 		return ComplexNumbers(
@@ -114,14 +112,12 @@ namespace complex {
 
 	bool ComplexNumbers::operator==(const ComplexNumbers& other) const noexcept
 	{
-		constexpr double epsilon{ 2.22e-12L };
 		ComplexNumbers a{ *this };
 		return (a - other).Abs() <= epsilon;
 	}
 
 	bool ComplexNumbers::operator==(int& other) noexcept
 	{
-		constexpr double epsilon{ 2.22e-12L };
 		ComplexNumbers a{ *this };
 		ComplexNumbers b{ (double)other, 0 };
 		return (a - b).Abs() <= epsilon;
@@ -129,7 +125,6 @@ namespace complex {
 
 	bool ComplexNumbers::operator==(double& other) noexcept
 	{
-		constexpr double epsilon{ 2.22e-12L };
 		ComplexNumbers a{ *this };
 		ComplexNumbers b{ other, 0 };
 		return (a - b).Abs() <= epsilon;
