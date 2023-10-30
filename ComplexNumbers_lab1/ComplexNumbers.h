@@ -8,12 +8,13 @@ namespace complex {
 		double _real;
 		double _imz;
 		double GetAngle() const;
+		const double epsilon{ 2.22e-12L };
 	public:
 		ComplexNumbers(double re, double imz);
 		ComplexNumbers();
 
 		double GetRealPart();
-		double SetRealPart(double& num_part);
+		double SetRealPart(const double num_part);
 		double GetImaginaryPart();
 		double SetImaginaryPart(double& num_part);
 
@@ -24,10 +25,10 @@ namespace complex {
 		static ComplexNumbers Pow(const ComplexNumbers& num, double& n);
 		double Abs() const;
 
-		ComplexNumbers operator+(const ComplexNumbers& other);
-		ComplexNumbers operator-(const ComplexNumbers& other);
-		ComplexNumbers operator*(const ComplexNumbers& other);
-		ComplexNumbers operator/(const ComplexNumbers& other);
+		ComplexNumbers operator+(const ComplexNumbers& other) const;
+		ComplexNumbers operator-(const ComplexNumbers& other) const;
+		ComplexNumbers operator*(const ComplexNumbers& other) const;
+		ComplexNumbers operator/(const ComplexNumbers& other) const;
 
 		bool operator==(const ComplexNumbers& other) const noexcept;
 		bool operator==(int& other) noexcept;
