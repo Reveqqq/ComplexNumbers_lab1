@@ -5,25 +5,28 @@ namespace complex {
 	class ComplexNumbers
 	{
 	private:
-		double _real;
-		double _imz;
-		double GetAngle() const;
-		const double epsilon{ 2.22e-12L };
+		float _real;
+		float _imz;
+		float GetAngle() const;
+		const float epsilon{ 0.0001f };
 	public:
-		ComplexNumbers(double re, double imz);
+		ComplexNumbers(float re, float imz);
 		ComplexNumbers();
+		ComplexNumbers(long long packed);
+		long long Pack();
+		void Unpack(long long packedValue);
 
-		double GetRealPart();
-		double SetRealPart(const double num_part);
-		double GetImaginaryPart();
-		double SetImaginaryPart(double& num_part);
+		float GetRealPart();
+		float SetRealPart(const float num_part);
+		float GetImaginaryPart();
+		float SetImaginaryPart(float& num_part);
 
 		static ComplexNumbers Add(ComplexNumbers& left, ComplexNumbers& rigjt);
 		static ComplexNumbers Sub(ComplexNumbers& left, ComplexNumbers& right);
 		static ComplexNumbers Mult(ComplexNumbers& left, ComplexNumbers& right);
 		static ComplexNumbers Div(ComplexNumbers& left, ComplexNumbers& right);
-		static ComplexNumbers Pow(const ComplexNumbers& num, double& n);
-		double Abs() const;
+		static ComplexNumbers Pow(const ComplexNumbers& num, float& n);
+		float Abs() const;
 
 		ComplexNumbers operator+(const ComplexNumbers& other) const;
 		ComplexNumbers operator-(const ComplexNumbers& other) const;
@@ -32,7 +35,7 @@ namespace complex {
 
 		bool operator==(const ComplexNumbers& other) const noexcept;
 		bool operator==(int& other) noexcept;
-		bool operator==(double& other) noexcept;
+		bool operator==(float& other) noexcept;
 
 		friend std::ostream& operator<<(std::ostream& out, const ComplexNumbers& complex);
 		friend std::istream& operator>>(std::istream& in, ComplexNumbers& complex);

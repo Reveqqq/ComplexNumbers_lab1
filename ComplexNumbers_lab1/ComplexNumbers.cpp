@@ -5,29 +5,54 @@ namespace complex {
 
 	ComplexNumbers::ComplexNumbers() : ComplexNumbers(0.0, 0.0) {}
 
-	ComplexNumbers::ComplexNumbers(double re, double imz): _real(re), _imz(imz){}
-	
-	double ComplexNumbers::GetAngle() const
+	ComplexNumbers::ComplexNumbers(float re, float imz) : _real(re), _imz(imz) {}
+	ComplexNumbers::ComplexNumbers(long long packed) { Unpack(packed); }
+
+	long long ComplexNumbers::Pack() {
+		unsigned int* ptrA = reinterpret_cast<unsigned int*>(&_real);
+		unsigned int* ptrB = reinterpret_cast<unsigned int*>(&_imz);
+
+		unsigned int intA = *ptrA;
+		unsigned int intB = *ptrB;
+
+		long long packedValue = static_cast<long long>(intA) << 32 | intB;
+
+		return packedValue;
+	}
+
+	void ComplexNumbers::Unpack(long long packed) {
+
+		unsigned int intA = packed >> 32;
+		unsigned int intB = packed & 0xFFFFFFFF;
+
+		float* ptrA = reinterpret_cast<float*>(&intA);
+		float* ptrB = reinterpret_cast<float*>(&intB);
+
+		_real = *ptrA;
+		_imz = *ptrB;
+	}
+
+	float ComplexNumbers::GetAngle() const
 	{
 		return _real ? atan(_imz / _real) : acos(-1);
 	}
 
-	double ComplexNumbers::GetRealPart()
+	float ComplexNumbers::GetRealPart()
 	{
 		return this->_real;
 	}
 
-	double ComplexNumbers::SetRealPart(const double num_part)
+	float ComplexNumbers::SetRealPart(const float num_part)
 	{
 		return this->_real = num_part;
 	}
 
-	double ComplexNumbers::GetImaginaryPart()
+	float ComplexNumbers::GetImaginaryPart()
 	{
 		return this->_imz;
 	}
 
-	double ComplexNumbers::SetImaginaryPart(double& num_part)
+	float ComplexNumbers::SetImaginaryPart(float& num_part)
 	{
 		return this->_imz = num_part;
 	}
@@ -52,10 +77,10 @@ namespace complex {
 		return left / right;
 	}
 
-	ComplexNumbers ComplexNumbers::Pow(const ComplexNumbers& num, double& n)
+	ComplexNumbers ComplexNumbers::Pow(const ComplexNumbers& num, float& n)
 	{
 
-		double p = pow(num.Abs(), n);
+		float p = pow(num.Abs(), n);
 		auto ang = n * num.GetAngle();
 		return ComplexNumbers(
 			p * cos(ang),
@@ -63,7 +88,7 @@ namespace complex {
 		);
 	}
 
-	double ComplexNumbers::Abs() const
+	float ComplexNumbers::Abs() const
 	{
 		return sqrt(
 			pow(_real, 2) + pow(_imz, 2)
@@ -119,11 +144,11 @@ namespace complex {
 	bool ComplexNumbers::operator==(int& other) noexcept
 	{
 		ComplexNumbers a{ *this };
-		ComplexNumbers b{ (double)other, 0 };
+		ComplexNumbers b{ (float)other, 0 };
 		return (a - b).Abs() <= epsilon;
 	}
 
-	bool ComplexNumbers::operator==(double& other) noexcept
+	bool ComplexNumbers::operator==(float& other) noexcept
 	{
 		ComplexNumbers a{ *this };
 		ComplexNumbers b{ other, 0 };
