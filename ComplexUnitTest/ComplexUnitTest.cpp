@@ -31,8 +31,8 @@ namespace ComplexUnitTest
 		TEST_METHOD(SetFunctionsTest)
 		{
 			ComplexNumbers c;
-			double re = 1.5;
-			double imz = 5.5;
+			float re = 1.5;
+			float imz = 5.5;
 			ComplexNumbers ans = ComplexNumbers(1.5, 5.5);
 			c.SetRealPart(re);
 			c.SetImaginaryPart(imz);
@@ -84,7 +84,7 @@ namespace ComplexUnitTest
 		{
 			ComplexNumbers a = ComplexNumbers(13.0, 1.0);
 			ComplexNumbers ans = ComplexNumbers(168.0, 26.0);
-			double power = 2;
+			float power = 2;
 			auto res = ComplexNumbers::Pow(a, power);
 			Assert::IsTrue(res == ans);
 		}
@@ -114,20 +114,36 @@ namespace ComplexUnitTest
 			ComplexNumbers a = ComplexNumbers(4, 0);
 			int b = 4;
 			Assert::IsTrue(a == b);
-			double d = 2.0;
+			float d = 2.0;
 			a.SetImaginaryPart(d);
 			Assert::IsFalse(a == b);
 		}
 
-		TEST_METHOD(EqualsWithDouble)
+		TEST_METHOD(EqualsWithfloat)
 		{
 			ComplexNumbers a = ComplexNumbers(10, 0);
-			double b = 10;
+			float b = 10;
 			Assert::IsTrue(a == b);
 			a.SetImaginaryPart(b);
 			Assert::IsFalse(a == b);
 
 		}
+	};
+	TEST_CLASS(PackingTest)
+	{
+		TEST_METHOD(PackingShould) {
+			ComplexNumbers c(3.142, 1.234);
+			long long c_pack = c.Pack();
+			ComplexNumbers b(c_pack);
+			Assert::IsTrue(c == b);
+		}
 
+		TEST_METHOD(UnpackingShould) {
+			ComplexNumbers a(3.142, -5.21);
+			long long a_pack = a.Pack();
+			ComplexNumbers b;
+			b.Unpack(a_pack);
+			Assert::IsTrue(a == b);
+		}
 	};
 }
