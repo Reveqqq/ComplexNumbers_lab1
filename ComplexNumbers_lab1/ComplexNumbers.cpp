@@ -9,11 +9,9 @@ namespace complex {
 	ComplexNumbers::ComplexNumbers(long long packed) { Unpack(packed); }
 
 	long long ComplexNumbers::Pack() {
-		unsigned int* ptrA = reinterpret_cast<unsigned int*>(&_real);
-		unsigned int* ptrB = reinterpret_cast<unsigned int*>(&_imz);
 
-		unsigned int intA = *ptrA;
-		unsigned int intB = *ptrB;
+		unsigned int intA = *reinterpret_cast<unsigned int*>(&_real);
+		unsigned int intB = *reinterpret_cast<unsigned int*>(&_imz);
 
 		long long packedValue = static_cast<long long>(intA) << 32 | intB;
 
